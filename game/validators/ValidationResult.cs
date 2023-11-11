@@ -1,4 +1,4 @@
-namespace mso.validators; 
+namespace mso.game.validators; 
 
 public record ValidationResult {
     public readonly bool IsValid;

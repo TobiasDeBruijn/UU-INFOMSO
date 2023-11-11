@@ -1,4 +1,4 @@
-namespace mso; 
+namespace mso.game; 
 
 public record StoneMovement(Pit OriginPit, Pit DestinationPit, Stone Stone) {
     public readonly Pit OriginPit = OriginPit;

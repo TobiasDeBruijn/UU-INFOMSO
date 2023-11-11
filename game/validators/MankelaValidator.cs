@@ -1,14 +1,14 @@
-namespace mso.validators; 
+namespace mso.game.validators; 
 
 public class MankelaValidator : IGameRuleValidator {
-    public ValidationResult IsMoveValid(Move move) {
+    public ValidationResult IsMoveValid(GameManager _, Move move) {
         for (int i = 0; i < move.StoneMovements.Count; i++) {
             StoneMovement m = move.StoneMovements[i];
 
             if (i + 1 == move.StoneMovements.Count) {
                 // Last stone in the move
 
-                if (m.DestinationPit.Owner == move.Player) {
+                if (m.DestinationPit.Owner == move.PlayerKey) {
                     return ValidationResult.Valid(true, new List<Stone>());
                 }
 
@@ -18,7 +18,7 @@ public class MankelaValidator : IGameRuleValidator {
                     return r;
                 }
 
-                if (m.DestinationPit.Stones.Count == 0 && m.DestinationPit.Owner == move.Player.GetOther()) {
+                if (m.DestinationPit.Stones.Count == 0 && m.DestinationPit.Owner == move.PlayerKey.GetOther()) {
                     return ValidationResult.Valid(false, new List<Stone>());
                 }
             }
