@@ -1,4 +1,3 @@
-using System.Formats.Asn1;
 using System.Text;
 using mso.game;
 
@@ -27,12 +26,17 @@ public class UiManager {
         Console.WriteLine();
 
         string? setHoleS = Console.ReadLine();
-        if (setHoleS == null || !int.TryParse(setHoleS, out int setHole)) {
-            Console.Error.WriteLine("Invalid integer");
-            Environment.Exit(1);
+        
+        if (setHoleS == null) {
+            return;
         }
         
+        if(!int.TryParse(setHoleS, out int setHole)) {
+            throw new IOException("Invalid integer");
+        }
         
+        Move m = _gameManager.CreateMove(setHole);
+        _gameManager.ApplyMove(m);
     }
 
     private void PrintBoard() {
@@ -84,8 +88,6 @@ public class UiManager {
     }
 
     private string StringifyPit(Pit p) {
-        p.Stones.Add(new Stone(PlayerKey.Player1));
-        
         StringBuilder sb = new StringBuilder();
         sb.AppendLine($"+{string.Join("", p.Stones.Select(_ => "-"))}+ ");
         if (p.IsHomePit) {

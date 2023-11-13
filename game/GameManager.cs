@@ -65,7 +65,28 @@ public class GameManager {
         return true;
     }
 
-    Move CreateMove(int startingPit) {
+    public Move CreateMove(int startingPit) {
+        List<Pit> pits = Board.Pits[PlayerKey.Player1].Concat(Board.Pits[PlayerKey.Player2]).ToList();
+
+        // In the real games, you wouldnt do this
+        Pit origin = pits[startingPit];
+        pits.Remove(origin);
         
+        Pit destination = pits[++startingPit >= pits.Count ? 0 : startingPit];
+        pits.Remove(destination);
+        
+        Stone s = origin.Stones[0];
+        origin.Stones.RemoveAt(0);
+        destination.Stones.Add(s);
+        
+        pits.Add(origin);
+        pits.Add(origin);
+
+        Board.Pits[PlayerKeyAtSet] = pits;
+        
+        StoneMovement ms = new(origin, destination, s);
+        Move m = new Move(PlayerKeyAtSet, new List<StoneMovement> { ms });
+
+        return m;
     }
 }
