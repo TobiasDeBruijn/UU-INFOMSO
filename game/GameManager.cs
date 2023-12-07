@@ -3,12 +3,12 @@ using mso.game.validators;
 namespace mso.game; 
 
 public class GameManager {
-    private readonly IGameRuleValidator _validator;
+    private readonly IGameImplementor _validator;
     public Board Board { get; }
     public PlayerKey PlayerKeyAtSet { get; private set; }
     private readonly List<Player> _players;
 
-    private GameManager(IGameRuleValidator validator, Board board, PlayerKey playerKeyAtSet) {
+    private GameManager(IGameImplementor validator, Board board, PlayerKey playerKeyAtSet) {
         _validator = validator;
         Board = board;
         PlayerKeyAtSet = playerKeyAtSet;
@@ -27,15 +27,15 @@ public class GameManager {
     }
 
     public static GameManager CreateForMankela(int numPits) {
-        return new GameManager(new MankelaValidator(), Board.WithNumPits(numPits, true), PlayerKey.Player1);
+        return new GameManager(new MakelaImplementor(), Board.WithNumPits(numPits, true), PlayerKey.Player1);
     }
 
     public static GameManager CreateForWari(int numPits) {
-        return new GameManager(new WariValidator(), Board.WithNumPits(numPits, false), PlayerKey.Player1);
+        return new GameManager(new WariImplementor(), Board.WithNumPits(numPits, false), PlayerKey.Player1);
     }
     
     public bool ApplyMove(Move move) {
-        ValidationResult result = _validator.IsMoveValid(this, move);
+        ValidationResult result = _validator.ApplyMove(this, move);
         if (!result.IsValid) {
             return false;
         }

@@ -1,7 +1,7 @@
 namespace mso.game.validators; 
 
-public class WariValidator : IGameRuleValidator {
-    public ValidationResult IsMoveValid(GameManager gm, Move move) {
+public class WariImplementor : IGameImplementor {
+    public ValidationResult ApplyMove(GameManager gm, Move move) {
         for (int i = 0; i < move.StoneMovements.Count; i++) {
             StoneMovement m = move.StoneMovements[i];
 

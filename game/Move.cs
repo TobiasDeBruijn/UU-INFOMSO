@@ -1,11 +1,9 @@
 namespace mso.game; 
 
 public class Move {
-    public readonly PlayerKey PlayerKey;
-    public readonly List<StoneMovement> StoneMovements;
+    public Pit StartingPit;
 
-    public Move(PlayerKey playerKey, List<StoneMovement> stoneMovements) {
-        PlayerKey = playerKey;
-        StoneMovements = stoneMovements;
+    public Move(Pit startingPit) {
+        StartingPit = startingPit;
     }
 }

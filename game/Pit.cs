@@ -1,21 +1,47 @@
 namespace mso.game; 
 
-public class Pit {
-    public readonly List<Stone> Stones;
-    public PlayerKey? Owner;
-    public readonly bool IsHomePit;
+public class Pit : IDeepClone<Pit> {
+    private static readonly Random Random = new Random();
+    
+    public List<Stone> Stones;
+    private readonly string _identifier;
 
-    private Pit(List<Stone> stones, PlayerKey? owner, bool isHomePit) {
+    private Pit(List<Stone> stones) {
         this.Stones = stones;
-        this.Owner = owner;
-        IsHomePit = isHomePit;
+        _identifier = RandomString(16);
+    }
+
+    private Pit(List<Stone> stones, string identifier) {
+        Stones = stones;
+        _identifier = identifier;
+    }
+
+    public Pit DeepClone() {
+        return new Pit(
+            Stones.ConvertAll(s => s.DeepClone()),
+            _identifier
+        );
+    }
+
+    public override bool Equals(object? obj) {
+        if (obj is Pit pit) {
+            return pit._identifier.Equals(this._identifier);
+        }
+
+        return false;
     }
     
-    public static Pit PlayPit(List<Stone> stones, PlayerKey owner) {
-        return new Pit(stones, owner, false);
+    private static string RandomString(int length) {
+        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        return new string(Enumerable.Repeat(chars, length)
+            .Select(s => s[Random.Next(s.Length)]).ToArray());
+    }
+    
+    public static Pit CreateEmpty() {
+        return new Pit(new List<Stone>());
     }
 
-    public static Pit HomePit(List<Stone> stones, PlayerKey owner) {
-        return new Pit(stones, owner, true);
+    public bool IsEmpty() {
+        return Stones.Count == 0;
     }
 }
