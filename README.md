@@ -1,6 +1,9 @@
 # MSO Assignment 3 - Retake
 Tobias de Bruijn (4714652)
 
+## Document
+An accompanying document can be found at ./assignment.pdf
+
 ## Starting the game
 Use the dotnet CLI, Visual Studio, or any other means provided by the Dotnet framework to start the application.
 
