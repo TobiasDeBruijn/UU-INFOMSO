@@ -17,45 +17,47 @@ public class WariImpl : AbstractGame, IGame {
             selectedPit += board.GameplaySize() / 2;
         }
         
-        int seeds = board[selectedPit];
+        int stones = board[selectedPit];
         board[selectedPit] = 0;
 
         int currentIndex = selectedPit + 1;
-        while (seeds > 0) {
-            if (currentPlayer == 1 && currentIndex == board.GameplaySize() - 1) {
-                currentIndex = 0;
-            } else if (currentPlayer == 2 && currentIndex == board.GameplaySize() / 2 + 1) {
-                currentIndex = board.GameplaySize() / 2 + 1;
-            }
+        while (stones > 0) {
+            currentIndex = currentPlayer switch {
+                1 when currentIndex == board.GameplaySize() - 1 => 0,
+                2 when currentIndex == board.GameplaySize() / 2 + 1 => board.GameplaySize() / 2 + 1,
+                _ => currentIndex
+            };
 
             if (currentIndex >= board.GameplaySize()) {
                 currentIndex = 0;
             }
-                
             
             board[currentIndex]++;
             currentIndex++;
-            seeds--;
+            stones--;
         }
 
+        // Pit in which the previous stone was set
         int lastPitIndex = currentIndex - 1;
-
-        // Check for capturing seeds
-        if (currentPlayer == 1 && lastPitIndex <= board.GameplaySize() / 2 - 1 && board[lastPitIndex] == 1) {
+        switch (currentPlayer) {
+            case 1 when lastPitIndex <= board.GameplaySize() / 2 - 1 && board[lastPitIndex] == 1: {
+                int oppositePitIndex = 2 * board.GameplaySize() - 1 - lastPitIndex;
+                if (oppositePitIndex >= board.GameplaySize()) {
+                    oppositePitIndex -= board.GameplaySize();
+                }
             
-            int oppositePitIndex = 2 * board.GameplaySize() - 1 - lastPitIndex;
-            if (oppositePitIndex >= board.GameplaySize()) {
-                oppositePitIndex -= board.GameplaySize();
+                board[board.GameplaySize() / 2 - 1] += board[lastPitIndex] + board[oppositePitIndex];
+                board[lastPitIndex] = board[oppositePitIndex] = 0;
+                break;
             }
-            
-            board[board.GameplaySize() / 2 - 1] += board[lastPitIndex] + board[oppositePitIndex];
-            board[lastPitIndex] = board[oppositePitIndex] = 0;
-        } else if (currentPlayer == 2 && lastPitIndex >= board.GameplaySize() / 2 + 1 &&
-                   lastPitIndex <= board.GameplaySize() - 2 && board[lastPitIndex] == 1) {
-            
-            int oppositePitIndex = board.GameplaySize() / 2 - 1 - (lastPitIndex - board.GameplaySize() / 2);
-            board[board.GameplaySize() + 1] += board[lastPitIndex] + board[oppositePitIndex];
-            board[lastPitIndex] = board[oppositePitIndex] = 0;
+            case 2 when lastPitIndex >= board.GameplaySize() / 2 + 1 &&
+                        lastPitIndex <= board.GameplaySize() - 2 && board[lastPitIndex] == 1: {
+              
+                int oppositePitIndex = board.GameplaySize() / 2 - 1 - (lastPitIndex - board.GameplaySize() / 2);
+                board[board.GameplaySize() + 1] += board[lastPitIndex] + board[oppositePitIndex];
+                board[lastPitIndex] = board[oppositePitIndex] = 0;
+                break;
+            }
         }
 
         // Switch players
