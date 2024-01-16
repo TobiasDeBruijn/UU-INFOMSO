@@ -1,6 +1,6 @@
-namespace temp;
+namespace mso;
 
-public class Reader {
+public static class Reader {
     /// <summary>
     /// Read an integer from stdin.
     /// </summary>

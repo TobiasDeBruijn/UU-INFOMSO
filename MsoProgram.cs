@@ -1,7 +1,9 @@
-using temp;
-using temp.impl;
+using mso.game;
+using mso.printer;
 
-class MankelaGame {
+namespace mso;
+
+public static class MsoProgram {
     public static void Main() {
 
         int selectedGame = Reader.ReadInt(
@@ -31,18 +33,19 @@ class MankelaGame {
             selectedGame == 1
         );
 
-        IGame gameImpl = selectedGame == 1 ? new MankelaImpl() : new WariImpl();
+        IGame engine = selectedGame == 1 ? new MankelaImpl() : new WariImpl();
+        IPrinter printer = new ConsolePrinter();
         
         int currentPlayer = 1; // 1 for player 1, 2 for player 2
         
         bool gameFinished = false;
         while (!gameFinished) {
-            Printer.Print(board);
-            currentPlayer = gameImpl.Step(board, currentPlayer);
-            gameFinished = gameImpl.IsFinished(board);
+            printer.Print(board);
+            currentPlayer = engine.Step(board, currentPlayer);
+            gameFinished = engine.IsFinished(board);
         }
 
-        Printer.Print(board);
+        printer.Print(board);
         Console.WriteLine("Game Over!");
     }
 }

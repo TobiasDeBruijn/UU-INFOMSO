@@ -1,11 +1,11 @@
-namespace temp;
+namespace mso.printer;
 
-public class Printer {
+public class ConsolePrinter : IPrinter {
     /// <summary>
     /// Print the board to stdout
     /// </summary>
     /// <param name="board">The board to print</param>
-    public static void Print(Board board) {
+    public void Print(Board board) {
         Console.WriteLine(string.Join(", ", board.Select(f => f.ToString())));
         
         // top half

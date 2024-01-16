@@ -19,6 +19,9 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/875ffbab416147698ae047fa9ac28e7e9ee800/6d/976522b0/Array.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b078cb2321d34eb1b352b6d136ec635381400/6d/999fd8e4/Enumerable.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
@@ -77,6 +80,7 @@
       <updated>1705066658709</updated>
       <workItem from="1705066659768" duration="2362000" />
       <workItem from="1705401996449" duration="4577000" />
+      <workItem from="1705409914151" duration="1255000" />
     </task>
     <servers />
   </component>
@@ -85,5 +89,37 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/game/WariImpl.cs</url>
+          <line>31</line>
+          <properties documentPath="$PROJECT_DIR$/impl/WariImpl.cs" initialLine="25" containingFunctionPresentation="Method 'Step'">
+            <startOffsets>
+              <option value="1017" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1039" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/game/WariImpl.cs</url>
+          <line>22</line>
+          <properties documentPath="$PROJECT_DIR$/impl/WariImpl.cs" initialLine="22" containingFunctionPresentation="Method 'Step'">
+            <startOffsets>
+              <option value="721" />
+            </startOffsets>
+            <endOffsets>
+              <option value="792" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

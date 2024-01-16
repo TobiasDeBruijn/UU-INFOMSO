@@ -1,6 +1,6 @@
 using System.Collections;
 
-namespace temp;
+namespace mso;
 
 public class Board : IEnumerable<int> {
     private readonly int _size;

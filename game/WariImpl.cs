@@ -1,11 +1,11 @@
-namespace temp.impl;
+namespace mso.game;
 
 public class WariImpl : IGame {
     public int Step(Board board, int currentPlayer) {
         int selectedPit = Reader.ReadInt(
             $"Player {currentPlayer}, choose a pit (1-{board.GameplaySize() / 2}): ",
             1,
-            board.GameplaySize(),
+            board.GameplaySize() / 2,
             v => board[v] != 0
         ) - 1;
 
@@ -18,10 +18,16 @@ public class WariImpl : IGame {
 
         int currentIndex = selectedPit + 1;
         while (seeds > 0) {
-            if (currentPlayer == 1 && currentIndex == board.GameplaySize() - 1)
+            if (currentPlayer == 1 && currentIndex == board.GameplaySize() - 1) {
                 currentIndex = 0;
-            else if (currentPlayer == 2 && currentIndex == board.GameplaySize() / 2 + 1)
+            } else if (currentPlayer == 2 && currentIndex == board.GameplaySize() / 2 + 1) {
                 currentIndex = board.GameplaySize() / 2 + 1;
+            }
+
+            if (currentIndex >= board.GameplaySize()) {
+                currentIndex = 0;
+            }
+                
             
             board[currentIndex]++;
             currentIndex++;

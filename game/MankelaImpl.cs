@@ -1,4 +1,4 @@
-namespace temp.impl;
+namespace mso.game;
 
 public class MankelaImpl : IGame {
     public int Step(Board board, int currentPlayer) {

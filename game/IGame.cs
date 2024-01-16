@@ -1,4 +1,4 @@
-namespace temp.impl;
+namespace mso.game;
 
 public interface IGame {
     public int Step(Board board, int currentPlayer);
