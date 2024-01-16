@@ -1,6 +1,10 @@
+using mso.reader;
+
 namespace mso.game;
 
-public class WariImpl : IGame {
+public class WariImpl : AbstractGame, IGame {
+    public WariImpl(IReader reader) : base(reader) {}
+
     public int Step(Board board, int currentPlayer) {
         int selectedPit = Reader.ReadInt(
             $"Player {currentPlayer}, choose a pit (1-{board.GameplaySize() / 2}): ",
@@ -54,6 +58,7 @@ public class WariImpl : IGame {
             board[lastPitIndex] = board[oppositePitIndex] = 0;
         }
 
+        // Switch players
         return 3 - currentPlayer;
     }
 

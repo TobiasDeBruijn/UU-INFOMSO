@@ -1,6 +1,6 @@
-namespace mso;
+namespace mso.reader;
 
-public static class Reader {
+public class ConsoleReader : IReader {
     /// <summary>
     /// Read an integer from stdin.
     /// </summary>
@@ -16,7 +16,7 @@ public static class Reader {
     /// - It is less than the upper bound
     /// - It passes the validator
     /// </returns>
-    public static int ReadInt(string description, int lb, int? ub, Func<int, bool>? validator) {
+    public int ReadInt(string description, int lb, int? ub, Func<int, bool>? validator) {
         Console.Write(description);
         int val;
         while (!int.TryParse(Console.ReadLine(), out val) || !(val >= lb) || !_EvalUb(ub, val) || !_EvalValidator(validator, val)) {
@@ -30,36 +30,17 @@ public static class Reader {
      * Get the range text for the upper bound.
      * Returns the infinity symbol if null, otherwhise returns the value.
      */
-    private static string _UbText(int? ub) {
-        if (ub == null) {
-            return "\u221e";
-        } else {
-            return ub.ToString();
-        }
-    }
+    private static string _UbText(int? ub) => ub == null ? "\u221e" : ub.ToString()!;
 
     /**
      * Evaluate the upper bounds check.
      * Always returns true if the upper bound is null.
      */
-    private static bool _EvalUb(int? ub, int val) {
-        if (ub == null) {
-            return true;
-        } else {
-            // Using negation to make the bounds check more clears
-            return !(ub < val);
-        }
-    }
+    private static bool _EvalUb(int? ub, int val) => ub == null || !(ub < val);
 
     /**
      * Evaluate the validator function.
      * Always returns true if the validator is null.
      */
-    private static bool _EvalValidator(Func<int, bool>? validator, int val) {
-        if (validator == null) {
-            return true;
-        } else {
-            return validator.Invoke(val);
-        }
-    } 
+    private static bool _EvalValidator(Func<int, bool>? validator, int val) => validator == null || validator.Invoke(val);
 }

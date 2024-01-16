@@ -1,6 +1,10 @@
+using mso.reader;
+
 namespace mso.game;
 
-public class MankelaImpl : IGame {
+public class MankelaImpl : AbstractGame, IGame {
+    public MankelaImpl(IReader reader) : base(reader) {}
+
     public int Step(Board board, int currentPlayer) {
         int selectedPit, relSelectedPit;
         do {
@@ -11,7 +15,7 @@ public class MankelaImpl : IGame {
                 relSelectedPit = -1;
             }
             
-            // Translate to the correct player
+            // 'Translate' to the correct player
             if(currentPlayer == 2) {
                 selectedPit = relSelectedPit + board.GameplaySize() / 2 + 1; 
             } else {
@@ -58,11 +62,12 @@ public class MankelaImpl : IGame {
             stones--;
         }
 
-        // Check if the last stone landed in the player's Mancala and give them another turn
+        // Check if the last stone landed in the player's home pit and give them another turn
         if ((currentPlayer == 1 && currentIndex - 1 == board.GameplaySize() / 2) || (currentPlayer == 2 && currentIndex - 1 == board.GameplaySize() + 1)) {
             Console.WriteLine("You get another turn!");
         } else {
-            currentPlayer = 3 - currentPlayer; // Switch player
+            // Switch player
+            currentPlayer = 3 - currentPlayer;
         }
 
         return currentPlayer;
@@ -73,17 +78,15 @@ public class MankelaImpl : IGame {
         bool player2Empty = true;
 
         for (int i = 0; i < board.Size() / 2 - 1; i++) {
-            if (board[i] != 0) {
-                player1Empty = false;
-                break;
-            }
+            if (board[i] == 0) continue;
+            player1Empty = false;
+            break;
         }
 
         for (int i = board.GameplaySize() - 1; i >= board.Size() / 2; i--) {
-            if (board[i] != 0) {
-                player2Empty = false;
-                break;
-            }
+            if (board[i] == 0) continue;
+            player2Empty = false;
+            break;
         }
 
         return player1Empty || player2Empty;
